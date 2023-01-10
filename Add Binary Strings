@@ -1,0 +1,23 @@
+public class Solution {
+    public String addBinary(String A, String B) {
+        
+        String result="";
+        int carry=0;
+        int i=0;
+        int aleng=A.length();
+        int bleng=B.length();
+        while(i<aleng || i<bleng || carry!=0){
+            int x=0;
+            if(i<aleng && A.charAt(aleng-i-1)=='1'){ x=1; }
+
+            int y=0;
+            if(i<bleng && B.charAt(bleng-i-1)=='1'){ y=1; }
+
+            result=(x+y+carry)%2+result;
+            carry=(x+y+carry)/2;
+
+            i++;
+        } 
+        return result;
+    }
+}
