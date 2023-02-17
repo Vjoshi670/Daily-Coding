@@ -1,0 +1,26 @@
+class Solution {
+    public int divide(int dividend, int divisor) {
+
+        long n=dividend,m=divisor;
+        int sign=1;
+        if(n<0){sign=-sign;}
+        if(m<0){sign=-sign;}
+
+        n=Math.abs(n);
+        m=Math.abs(m);
+        long q=0;
+        for(int i=31;i>=0;i--){
+            if((m<<i) <= n){
+                n=n-(m<<i);
+                q=q+((long)1<<i);
+            }
+        }
+        if(sign<0){q=-q;}
+        if(q>Integer.MAX_VALUE){
+            return Integer.MAX_VALUE;
+        }
+        else{
+            return (int)q;
+        }
+    }
+}
