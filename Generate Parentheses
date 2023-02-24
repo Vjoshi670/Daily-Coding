@@ -1,0 +1,23 @@
+class Solution {
+    ArrayList<String> ans=new ArrayList<>();
+    public List<String> generateParenthesis(int n) {
+         int openBraces=0;
+        int closeBraces=0;
+        generate(n,"",openBraces,closeBraces);
+        return ans;
+    }
+    public void generate(int A,String S,int openBraces,int closeBraces){
+
+        if(S.length()==2*A){
+            ans.add(S);
+            return ;
+        }
+        if(openBraces<A){
+            generate(A,S+"(",openBraces+1,closeBraces);
+        }
+        if(closeBraces<openBraces){
+            generate(A,S+")",openBraces,closeBraces+1);
+            
+        }
+    }
+}
