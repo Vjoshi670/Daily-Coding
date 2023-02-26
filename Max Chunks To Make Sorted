@@ -1,0 +1,15 @@
+class Solution {
+    public int maxChunksToSorted(int[] arr) {
+       int n = arr.length;
+        int chunks = 0;
+        int ele = 0;
+        for(int i=0; i<n; i++){
+            ele = Math.max(ele,arr[i]);
+            if(ele==i){
+                chunks++;
+            }
+           
+        }
+        return chunks; 
+    }
+}
