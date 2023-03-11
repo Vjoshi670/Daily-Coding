@@ -1,0 +1,72 @@
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode sortList(ListNode head) {
+         if(head==null){return head;}
+        if(head.next==null){return head;}
+        ListNode C1=centre(head);
+        ListNode H2=C1.next;
+        C1.next=null;
+        ListNode H1=sortList(head);
+        H2=sortList(H2);
+        return mergeTwoLists(H1,H2);
+    }
+     // Middle node of linked list
+    public ListNode centre(ListNode A) {
+        if(A==null){return A;}
+        ListNode slow=A;
+        ListNode fast=A;
+        while(fast.next != null  &&  fast.next.next != null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        
+        return slow;
+    }
+    // Merge 2 sorted linked list
+    public ListNode mergeTwoLists(ListNode A, ListNode B) {
+        
+        ListNode C=null;;
+        ListNode temp = null;
+
+        if(A == null) { return B; }
+        if(B == null) { return A; }
+        // Setting head to start
+        if(A.val < B.val){
+            C = A;
+            temp = A;
+            A = A.next;
+        }
+        else{
+            C = B;
+            temp = B;
+            B = B.next;
+        }
+        // Traversing through list
+        while(A != null && B != null){
+            if(A.val < B.val){
+                temp.next = A;
+                A =A.next;
+                temp = temp.next;
+            }
+            else {
+                temp.next = B;
+                B = B.next;
+                temp= temp.next;
+            }
+        }
+//Merging rest of the link after shorter List exhausts
+        if(A == null){temp.next = B; }
+        if (B == null) {temp.next = A;}
+
+        return C;
+    }
+}
