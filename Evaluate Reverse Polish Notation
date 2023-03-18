@@ -1,0 +1,41 @@
+class Solution {
+    public int evalRPN(String[] tokens) {
+        int length = tokens.length;
+
+    //Edge case : what If our length itself 1 , in this we should return A[i];
+    if(length == 1){
+
+      return Integer.parseInt(tokens[0]);
+      
+      //Integer.parseInt() is a method used to parse a string into an integer value.
+      //The method takes a string as an input parameter and returns an integer value.
+    }
+
+    int result = 0;
+
+    Stack <Integer> st = new Stack<>(); // intialising Stack
+
+    for(int i = 0; i < length; i++){
+      if ( tokens[i].equals("+") || tokens[i].equals("-")|| tokens[i].equals("*") ||tokens[i].equals("/") ){
+
+        String operator = tokens[i];
+        int b = st.pop();
+        int a = st.pop();
+
+      if(operator.equals("+")) result = a + b;                                                    
+      else if(operator.equals("-")) result = a - b;
+      else if(operator.equals("*")) result = a * b;
+      else if(operator.equals("/")) result = a / b;
+
+       st.push(result); // getting the result and store it in the stack
+    }
+   // if no operators found we just store it in the stack
+   else{
+     int curr_Value = Integer.parseInt(tokens[i]);
+     st.push(curr_Value);
+    }
+
+   }
+    return result;
+    }
+}
