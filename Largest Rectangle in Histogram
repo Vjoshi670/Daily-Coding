@@ -1,0 +1,51 @@
+class Solution {
+    Stack<Integer> leftStack = new Stack<>();
+     Stack<Integer> rightStack = new Stack<>();
+     int[] leftArr ;
+     int[] rightArr;
+    public int largestRectangleArea(int[] heights) {
+    if(heights.length == 1)
+            return heights[0];
+
+        long max = Long.MIN_VALUE;
+        leftArr = new int[heights.length];
+        rightArr = new int[heights.length];
+        SmallerOnLeft(heights);
+        SmallerOnRight(heights);
+        for(int i=0;i<heights.length;i++)
+        {
+            long prod = (rightArr[i]-leftArr[i]-1)*heights[i];
+            max = Math.max(max,prod);
+        }
+        return (int)max;
+
+    }
+
+    public void SmallerOnLeft(int[] arr)
+    {
+        for(int i=0;i<arr.length;i++){
+            while(!leftStack.isEmpty() && arr[leftStack.peek()]>=arr[i])
+                leftStack.pop();
+
+            if(leftStack.isEmpty()) leftArr[i]=-1;
+            else 
+                leftArr[i]=leftStack.peek();
+
+            leftStack.push(i);
+        }
+    }
+
+    public void SmallerOnRight(int[] arr)
+    {
+        for(int i=arr.length-1;i>=0;i--){
+            while(!rightStack.isEmpty() && arr[rightStack.peek()]>=arr[i])
+                rightStack.pop();
+                
+            if(rightStack.isEmpty()) rightArr[i]=arr.length;
+            else 
+                rightArr[i]=rightStack.peek();
+                
+            rightStack.push(i);
+        }
+    } 
+}
