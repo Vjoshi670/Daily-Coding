@@ -1,0 +1,32 @@
+class Solution {
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        int N=nums.length;
+       
+        Deque<Integer> qu=new LinkedList<>();
+        // prepare Dequeue for 1st K elements.
+        //removing smaller elements then largest in window and adding smaller at end.
+        for (int i=0;i<k;i++){
+            while (qu.size()>0 && nums[i]>qu.peekLast()){
+                   qu.removeLast();
+            }
+            qu.addLast(nums[i]);
+        }
+        //ans array.
+        int [] C=new int [N-k+1];
+        C[0]=qu.peekFirst();
+        for (int i=k;i<N;i++){
+
+            if (nums[i-k]==qu.peekFirst()){
+                 qu.removeFirst();
+            }
+            while(qu.size()>0 && nums[i]>qu.peekLast()){
+                 qu.removeLast();
+            }
+            qu.addLast(nums[i]);
+
+            C[i-k+1]=qu.peekFirst();
+        }
+
+        return C;
+    }
+}
