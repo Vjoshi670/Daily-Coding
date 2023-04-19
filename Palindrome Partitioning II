@@ -1,0 +1,40 @@
+class Solution {
+    
+    public int minCut(String s) {
+       boolean dp[][] = new boolean[s.length()][s.length()];
+
+        for(int g=0;g<s.length();g++){
+            for(int i=0, j=g;j<s.length();j++, i++){
+                if(i==j){
+                    dp[i][j]=true;
+                }else if(i+1==j){
+                    dp[i][j]= s.charAt(i)==s.charAt(j);
+                }else{
+                    dp[i][j] = s.charAt(i)==s.charAt(j) && dp[i+1][j-1];
+                }
+            }
+        }
+       
+// find min partition
+        int cost[] = new int[s.length()];
+        cost[0]=0;
+        for(int j=1;j<s.length();j++){
+            if(dp[0][j]){
+                cost[j]=0;
+            }else{
+                int min = Integer.MAX_VALUE;
+
+                for(int i=j;i>=1;i--){
+
+                    if(dp[i][j]){
+                        if(cost[i-1]<min){
+                            min = cost[i-1];
+                        }
+                    }
+                }
+                cost[j]=min+1;
+            }
+        }
+        return cost[s.length()-1];
+    }
+}
