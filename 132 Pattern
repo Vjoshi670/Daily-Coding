@@ -1,0 +1,22 @@
+class Solution {
+    public boolean find132pattern(int[] nums) {
+        int[] min = new int[nums.length];
+        int minSoFar = nums[0];
+        
+        for(int i = 0; i < nums.length; i++) {
+            minSoFar = Math.min(minSoFar, nums[i]);
+            min[i] = minSoFar;
+        }
+        
+        Stack<Integer> stack = new Stack<>();
+        //we will use a stack to store the max element from the end of the array nums
+        for(int i = nums.length - 1; i >= 0; i--) {
+            while(stack.size() > 0 && min[i] >= stack.peek()) stack.pop();
+            if(stack.size() > 0 && nums[i] > stack.peek()) return true;
+            
+            stack.push(nums[i]);
+        }
+
+        return false;
+    }
+}
