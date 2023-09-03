@@ -1,0 +1,25 @@
+class Solution {
+    public int rob(int[] nums) {
+           int n = nums.length;
+        if(n == 1) {
+            return nums[0];
+        }
+        
+        return Math.max(maxMoney(nums, 0, n - 1), maxMoney(nums, 1, n));
+    }
+
+    static int maxMoney(int[] nums, int start, int end) {
+
+        int prev2 = 0;
+        int prev1 = nums[start];
+
+        for(int i = start + 1; i < end; i++) {
+            int include = prev2 + nums[i];
+            int exclude = prev1;
+            int curri = Math.max(include, exclude);
+            prev2 = prev1;
+            prev1 = curri;
+        }
+        return prev1;
+    }
+}
