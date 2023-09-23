@@ -1,0 +1,24 @@
+class Solution {
+    public boolean judgeSquareSum(int c) {
+       long a = 0;
+        long b = (long) Math.sqrt(c); // it will return the sqrt of number, 
+// eg if, c = 4 then it will be 2,so we will start from a = 0; to b = 2; 
+
+        while (a <= b) {
+
+            if (a * a + b * b == c) {
+                return true;
+            } else if (a * a + b * b > c) { // sqrt is maximum,
+// means a is at it's min, and b is at their max level, as a is
+// starting from 0 and b from sqrt(c)
+// max , so we will decrement b;
+                b--;
+            } else { // If the value is less than c , means 
+// (as b is alwats max so we will have to increment a )
+                a++;
+            }
+        }
+        return false; // at the end if none of the condition
+// executes, we will return false 
+    }
+}
