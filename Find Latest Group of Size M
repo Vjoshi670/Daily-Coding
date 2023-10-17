@@ -1,0 +1,43 @@
+class Solution {
+    public int findLatestStep(int[] arr, int m) {
+        int n = arr.length;
+        if (m == n) return n;
+        int step = -1;
+        int[] map = new int[n + 1];
+        int countOfM = 0;
+        for (int i = 0; i < arr.length; i++) {
+            int current = arr[i];
+            int count = 1;
+            int leftSpan = 0;
+            int rightSpan = 0;
+			// If the left side is not 0
+            if (current - 1 > 0 && map[current - 1] != 0) {
+				// count how many 1s does left side have
+                leftSpan = map[current - 1];
+				// cause we connect left and right side. 
+                if (leftSpan == m) {
+                    countOfM--;
+                }
+				// modify our count of 1s
+                count += leftSpan;
+				// update the left side
+                map[current - 1] = 0;
+                
+            }
+            if (current + 1 <= n && map[current + 1] != 0) {
+                rightSpan = map[current + 1];
+                if (rightSpan == m) {
+                    countOfM--;
+                }
+                count += rightSpan;
+                map[current + 1] = 0;
+            }
+            
+            map[current - leftSpan] = count;
+            map[current + rightSpan] = count;
+            if (count == m) countOfM++;
+            if (countOfM > 0) step = i + 1;
+        }
+        return step;
+    }
+}
