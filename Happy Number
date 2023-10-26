@@ -1,0 +1,22 @@
+class Solution {
+    public boolean isHappy(int n) {
+        int j = 0;
+        // Perform the following steps at most 10 times to prevent infinite looping.
+        while (j++ < 10) {
+            int sum = 0;  // Initialize a variable to store the sum of squared digits.
+
+            // Extract and process each digit of 'n' until it becomes 0.
+            while (n != 0) {
+                int num = n % 10;      // Get the last digit of 'n'.
+                sum += num * num;      // Square the digit and add it to 'sum'.
+                n /= 10;              // Remove the last digit from 'n'.
+            }
+
+            if (sum == 1) return true;  // If the sum is 1, 'n' is a happy number, return true.
+
+            n = sum;  // Update 'n' to be the calculated sum for the next iteration.
+        }
+
+        return false;
+    }
+}
