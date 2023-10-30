@@ -1,0 +1,41 @@
+class Solution {
+   int max=Integer.MIN_VALUE;
+    int m=0;
+    public int maxPoints(int[][] points) {
+
+        if(points.length<=2) return points.length;
+        Arrays.sort(points,(a, b) -> Double.compare(a[0], b[0]));
+        HashMap<Double,Integer> map= new HashMap<>();
+        HashMap<Integer,Integer> slope90= new HashMap<>();
+        for(int i=0;i<points.length;i++){
+            for(int j=i+1;j<points.length;j++){
+                // so as to prevent division by zero error
+                //this map stores the x of the lines of type x=2 ie slop=90 degrees
+                if(points[j][0]-points[i][0]==0) {
+                   if(slope90.containsKey(points[i][0])){
+                        slope90.replace(points[i][0],slope90.get(points[i][0])+1);
+                    }
+                    else slope90.put(points[i][0],2);
+                    continue;
+                }
+                //calculating the slope
+                double m=((double)(points[j][1]-points[i][1])/(points[j][0]-points[i][0]));
+                //check if slope exists in map, then increase the frequency
+                if(map.containsKey(m)){
+                    map.replace(m,map.get(m)+1);
+                }
+                else map.put(m,2);
+            }
+            //iterating the maps to update the max occuring
+            for(Integer temp:map.values()){
+                if(temp>max){max=temp;}
+            }
+            for(Integer temp:slope90.values()){
+                if(temp>max)max=temp;
+            }
+            map= new HashMap<>();
+            slope90= new HashMap<>();
+        }
+        return max;    
+    }
+}
