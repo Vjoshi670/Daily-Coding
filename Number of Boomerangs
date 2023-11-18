@@ -1,0 +1,20 @@
+class Solution {
+    public int numberOfBoomerangs(int[][] points) {
+        Map<Integer,Integer> a=new HashMap<>();
+        int res=0;
+        for(int i=0;i<points.length;i++){
+            for(int j=0;j<points.length;j++){
+                if(i==j)continue;
+                int l=length(points,i,j);
+                a.put(l,a.getOrDefault(l,0)+1);
+            }
+            for(int v: a.values())
+            res=res+(v*(v-1));// number of subset of 2(since first element i is fixed) can be formed by a set with n terms is(n*(n-1)/2 order not considered and since here the order is considered hence we will take n*n-1)
+            a.clear();//this improves the time complexity as hashmap is not created multiple times.
+        }
+        return res;
+    }
+    int length(int[][] p,int i,int j){
+        return ((((p[i][0]-p[j][0])*(p[i][0]-p[j][0]))+((p[i][1]-p[j][1])*(p[i][1]-p[j][1]))));
+    }
+}
