@@ -1,0 +1,41 @@
+class Solution {
+
+    int m,n;
+    ArrayList<String> arr;
+    public Solution(int m, int n) {
+//initializing ArrayList
+        arr=new ArrayList<>();
+// Initializing m,n
+        this.m=m;
+        this.n=n;
+    }
+    
+    public int[] flip() {
+// Generating Random i and j between range (0,m) and (0,n) respectively.
+        int i=(int)(Math.random()*(m));
+        int j=(int)(Math.random()*(n));
+//Making a String of combination of i and j
+        String s=i+"@"+j;
+//Checking the ArrayList already contains the combination
+        while(arr.contains(s)){
+        i=(int)(Math.random()*(m));
+        j=(int)(Math.random()*(n));
+        s=i+"@"+j;
+        }
+//Adding new combination to ArrayList
+        arr.add(s);
+//returning as an array
+        return new int[]{i,j};
+    }
+    
+    public void reset() {
+//Clearing ArrayList
+        arr.clear();
+}
+}
+/**
+ * Your Solution object will be instantiated and called as such:
+ * Solution obj = new Solution(m, n);
+ * int[] param_1 = obj.flip();
+ * obj.reset();
+ */
