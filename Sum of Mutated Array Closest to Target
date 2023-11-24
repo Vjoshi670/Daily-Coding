@@ -1,0 +1,37 @@
+class Solution {
+    public int findBestValue(int[] arr, int target) {
+        int arrSum = 0;
+        for(int num: arr) {
+            arrSum += num;
+        }
+        return binarySearch(0, target, arr, target, arrSum);
+    }
+
+    private int getSum(int[] arr, int num) {
+        int sum = 0;
+        for(int curr: arr) {
+            sum += Math.min(curr, num);
+        }
+        return sum;
+    }
+
+    private int binarySearch(int begin, int end, int[] arr, int target, int arrSum) {
+        if(begin == end) {
+            return begin;
+        }
+        if(end == begin + 1) {
+            int endSum = getSum(arr, end);
+            int beginSum = getSum(arr, begin);
+            if(Math.abs(target - beginSum) <= Math.abs(target - endSum)) {
+                return begin;
+            }
+            return end;
+        }
+        int medium = begin + (end - begin) / 2;
+        int mediumSum = getSum(arr, medium);
+        if(mediumSum >= target || mediumSum == arrSum) {
+            return binarySearch(begin, medium, arr, target, arrSum);
+        }
+        return binarySearch(medium, end, arr, target, arrSum);
+    }
+}
