@@ -1,0 +1,29 @@
+class Solution {
+    public int maxSumDivThree(int[] nums) {
+        int n = nums.length;
+        int k = 3; // Number of possible remainders
+        long[][] dp = new long[n + 1][k];
+        
+        // Initialize the dp array with negative infinity values
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(dp[i], Integer.MIN_VALUE);
+        }
+        
+        // Base case: maximum sum with remainder 0 is 0
+        dp[0][0] = 0;
+        
+        // Iterate through the numbers in the array
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < k; j++) {
+                // Calculate the new remainder after including the current number
+                int newRemainder = (j + nums[i]) % k;
+                
+                // Update the maximum sum for the current remainder
+                dp[i + 1][newRemainder] = Math.max(dp[i][newRemainder], dp[i][j] + nums[i]);
+            }
+        }
+        
+        // The maximum sum with remainder 0 after considering all elements
+        return (int) dp[n][0];
+    }
+}
