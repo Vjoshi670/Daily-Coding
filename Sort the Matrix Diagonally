@@ -1,0 +1,52 @@
+class Solution {
+    public int[][] diagonalSort(int[][] mat) {
+        int y = 0;
+        int x = 0;
+
+        for (int i = 0; i < mat[0].length; i++) {
+
+            int[] row1 = new int[Math.min(mat[0].length - i, mat.length)];
+            x = i;
+            y = 0;
+            for (int j = 0; j < row1.length; j++) {
+                int x1 = mat[y++][x++];
+
+                row1[j] = x1;
+            }
+            Arrays.sort(row1);
+
+            x = i;
+            y = 0;
+
+            for (int j = 0; j < row1.length; j++) {
+                mat[y][x]=row1[j];
+                x++;
+                y++;
+            }
+        }
+
+        for (int i = 1; i < mat.length; i++) {
+
+            int[] row1 = new int[Math.min(mat.length - i, mat[0].length)];
+
+            x = i;
+            y = 0;
+            for (int j = 0; j < row1.length; j++) {
+                int x1 = mat[x++][y++];
+                row1[j] = x1;
+            }
+            Arrays.sort(row1);
+
+            x = i;
+            y = 0;
+
+            for (int j = 0; j < row1.length; j++) {
+                mat[x][y]=row1[j];
+                x++;
+                y++;
+            }
+        }
+
+        return mat; 
+    }
+}
