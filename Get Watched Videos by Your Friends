@@ -1,0 +1,62 @@
+class Solution {
+    public List<String> watchedVideosByFriends(List<List<String>> watchedVideos, int[][] friends, int id, int level) {
+        int n = friends.length;
+        boolean[] visited = new boolean[n];
+
+
+        Queue<Integer> qu = new LinkedList<>();
+
+        List<String> ans = new ArrayList<>();
+
+        qu.add(id);
+        int m,topnode;
+        visited[id] = true;
+        for(int i = 0;i<level && !qu.isEmpty();i++){
+            m = qu.size();
+            for(int j = 0;j<m;j++){
+                topnode = qu.poll();
+                
+                for(int friend: friends[topnode]){
+                    if(!visited[friend]){
+                        qu.add(friend);
+                        visited[friend] = true;
+                    }
+                    
+                }
+               
+                
+            }
+        }
+        HashMap<String,Integer> map = new HashMap<>();
+        while(!qu.isEmpty()){
+            topnode = qu.poll();
+            for(String vid: watchedVideos.get(topnode)){
+                map.put(vid,map.getOrDefault(vid,0)+1);
+            }
+        }
+        List<Node> arr = new ArrayList<>();
+        for(Map.Entry<String,Integer> set: map.entrySet()){
+            arr.add(new Node(set.getKey(),set.getValue()));
+        }
+        Collections.sort(arr,(a,b)->a.count == b.count?a.s.compareTo(b.s):a.count-b.count);
+        for(Node r: arr){
+            ans.add(r.s);
+        }
+
+        return ans;
+
+    }
+}
+
+class Node{
+    String s;
+    int count = 0;
+
+    Node(String s,int count){
+        this.s = s;
+        this.count = count;
+    }
+
+
+
+    }
