@@ -1,0 +1,31 @@
+class Solution {
+    public List<Integer> filterRestaurants(int[][] restaurants, int veganFriendly, int maxPrice, int maxDistance) {
+        PriorityQueue<int[]> queue=new PriorityQueue<>((a,b)->{
+            //if rating is same then sort accord. to id
+            if(b[1]-a[1]==0)
+            return b[0]-a[0];
+            else return b[1]-a[1];
+            });
+
+        for(int i=0; i<restaurants.length; i++){
+            // if requirement is vegan friendly then check condition otherwise all restaurants are accepted
+            if(veganFriendly==1)
+            if(restaurants[i][2]!=1)// if requirement veganFriendly and got non-veganFriendly(0) then, skip this restaurant
+            continue;
+          
+            if(restaurants[i][3]>maxPrice)
+            continue;
+            if(restaurants[i][4]>maxDistance)
+            continue;
+            queue.add(restaurants[i]);
+        }
+
+//items are already stored and sorted acc. to rating (Priority Queue) 
+        List<Integer> list=new ArrayList<>();
+        while(! queue.isEmpty()){
+            list.add(queue.poll()[0]);
+        }
+        return list;
+        
+    }
+    }
