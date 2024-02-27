@@ -1,0 +1,12 @@
+class Solution {
+    public int maxIceCream(int[] costs, int coins) {
+        Arrays.sort(costs); // Sort costs
+
+        for(int i=0 ;i<costs.length;++i)
+            if( (coins-=costs[i])<0) // Update && check
+                return i; 
+
+        //if we still have coins after buying all the icecream :
+        return costs.length;
+    }
+}
