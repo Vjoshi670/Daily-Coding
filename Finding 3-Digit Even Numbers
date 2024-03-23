@@ -1,0 +1,42 @@
+
+class Solution {
+    public int[] findEvenNumbers(int[] digits) {
+        ArrayList<Integer> ans=new ArrayList<Integer>();
+        int l=0,sum=0;
+
+        for(int i=0;i<digits.length;i++){
+            for(int j=0;j<digits.length;j++){
+                for(int k=0;k<digits.length;k++){
+                   if(i!=j && j!=k && k!=i && digits[i]!=0){
+                       sum=(digits[i]*100)+(digits[j]*10)+digits[k];
+
+                       if(sum%2==0){
+                           ans.add(sum);
+                       }
+                   }
+                }
+            }
+        }
+
+        Collections.sort(ans);
+        ArrayList<Integer> result=new ArrayList<Integer>();
+
+        for(int i=0;i<ans.size();i++){
+            if(i==0){
+                result.add(ans.get(i));
+            }
+            else{
+                int first=ans.get(i-1);
+                int second=ans.get(i);
+                if(first!=second){
+                   result.add(ans.get(i));
+                }
+            } 
+        }
+        int arr[]=new int[result.size()]; 
+            for(int j=0;j<result.size();j++){
+                arr[j]=result.get(j);
+            } 
+        return arr;
+    }
+}
