@@ -1,0 +1,80 @@
+class Solution {
+    public List<List<Integer>> highestRankedKItems(int[][] grid, int[] pricing, int[] start, int k) {
+        List<List<Integer>> res=new ArrayList<>();
+        int m=grid.length;
+        int n=grid[0].length;
+        
+        PriorityQueue<node> pq=new PriorityQueue<>((a,b)->{
+            if(a.steps!=b.steps){
+                return b.steps-a.steps;
+            }
+            else{
+                int val1=grid[a.i][a.j];
+                int val2=grid[b.i][b.j];
+                if(val1!=val2){
+                    return val2-val1;
+                }
+                else{
+                    if(a.i!=b.i){
+                        return b.i-a.i;
+                    }
+                    else{
+                        return b.j-a.j;
+                    }
+                }
+                
+            }
+        });
+        
+        LinkedList<node> q=new LinkedList<>();
+        q.add(new node(start[0],start[1],0));
+        boolean[][] visited=new boolean[m][n];
+        visited[start[0]][start[1]]=true;
+        int[][] dir={{-1,0},{1,0},{0,-1},{0,1}};
+        
+        while(!q.isEmpty()){
+            node temp=q.removeFirst();
+            int price=grid[temp.i][temp.j];
+            if(price!=1 && pricing[0]<=price && price<=pricing[1]){
+                pq.add(temp);
+                if(pq.size()>k){
+                    pq.remove();
+                }
+            }
+            
+            for(int i=0;i<4;i++){
+                int x=dir[i][0]+temp.i;
+                int y=dir[i][1]+temp.j;
+                
+                if(x<0 || y<0 || x==m || y==n || visited[x][y] || grid[x][y]==0){
+                    continue;
+                }
+                
+                visited[x][y]=true;
+                q.add(new node(x,y,temp.steps+1));
+            }
+        }
+        
+        while(pq.size()>0){
+            node temp=pq.remove();
+            List<Integer> l=new LinkedList<>();
+            l.add(temp.i);
+            l.add(temp.j);
+            res.add(l);
+        }
+        Collections.reverse(res);
+        return res;
+    }
+    
+}
+
+class node{
+        int steps;
+        int i;
+        int j;
+        public node(int i,int j,int steps){
+            this.i=i;
+            this.j=j;
+            this.steps=steps;
+    }
+}
