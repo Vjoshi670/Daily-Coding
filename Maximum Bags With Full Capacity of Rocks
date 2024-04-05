@@ -1,0 +1,29 @@
+class Solution {
+    public int maximumBags(int[] capacity, int[] rocks, int additionalRocks) {
+        int vaccancy[] = new int[capacity.length];
+     for(int i=0; i<capacity.length; i++){
+         vaccancy[i] = capacity[i]-rocks[i];
+     }   
+     Arrays.sort(vaccancy);
+     int cFB = 0; //count for full bag
+     for(int i=0; i<vaccancy.length; i++){
+         if(vaccancy[i] == 0)
+         {
+             cFB++;
+         }
+         else{
+             if(additionalRocks >= vaccancy[i])
+             {
+                 additionalRocks -=vaccancy[i];
+                 cFB++;
+             }
+             else
+             {
+                 break;
+             }
+             
+             }
+     }
+     return cFB;
+    }
+}
