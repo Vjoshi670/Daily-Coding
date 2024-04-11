@@ -1,0 +1,39 @@
+class Solution {
+    public int latestTimeCatchTheBus(int[] buses, int[] passengers, int capacity) {
+                int passenger = -1, bus = 0, currCap = 0;
+        Arrays.sort(buses);
+        Arrays.sort(passengers);
+        while(bus < buses.length) {
+            currCap = 0;
+            // Check if bus capacity is not reached, there are passengers remaining and
+            // the arrival time of the next passenger will be less than or equal to this bus's arrival time,
+            // if all 3 conditions are true, increment the current capacity and passenger index.
+            while(currCap < capacity && passenger < (passengers.length-1) && passengers[passenger+1] <= buses[bus]) {
+                currCap++;
+                passenger++;
+            }
+            // Increment the bus number because this bus is leaving,
+            // whether it has passengers filled to capacity or not.
+            bus++;
+        } 
+        // At the end of the loop we have the last passenger who boarded any bus in passenger variable and
+        // currCap contains the number of passengers in the last bus.
+
+        // Check if the last bus ran less than capacity and (either no passengers boarded any buses 
+        // or the time of departure of last bus is not equal to last boarded passenger), 
+        // then the latest time I can arrive is equal to the last bus departure time.
+        if (currCap < capacity && (passenger < 0 || buses[buses.length-1] != passengers[passenger])) {
+            return buses[buses.length-1];
+        }
+        // We are here searching from the last passenger's arrival time, the first arrival time not present in
+        // the passenger array.
+        while(passenger > 0 && (passengers[passenger] - 1) == passengers[passenger-1]) {
+            passenger--;
+        }
+
+        // When we reach an index of passenger where decrementing one from that passenger's arrival time,
+        // there is no other passenger coming at that same time, we can return that value after decrementing
+        // one.
+        return passengers[passenger]-1;
+    }
+}
