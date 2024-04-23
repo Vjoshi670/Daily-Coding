@@ -1,0 +1,41 @@
+class Solution {
+    public int[] smallestTrimmedNumbers(String[] nums, int[][] queries) {
+        class Pair {
+            String num;
+            Integer idx;
+            public Pair(String num,int idx) {
+                this.num = num;
+                this.idx = idx;
+            }
+        }
+
+        int[] ans = new int[queries.length];
+        int x = nums[0].length();
+        
+        for(int i=0; i<queries.length; i++) {
+            int n = queries[i][0];
+            int m = queries[i][1];
+
+            PriorityQueue<Pair> pq = new PriorityQueue<>(new Comparator<Pair>() {
+                @Override
+                public int compare(Pair p1,Pair p2) {
+                    if(p1.num.equals(p2.num)) return p1.idx.compareTo(p2.idx);
+                    else return p1.num.compareTo(p2.num);
+                }
+            });
+
+            for(int j=0; j<nums.length; j++) {
+                String sub_string = nums[j].substring(x-m,x);
+                pq.offer(new Pair(sub_string,j));
+            }
+            
+            for(int j=0; j<n; j++){
+                if(!pq.isEmpty()){
+                    ans[i] = pq.poll().idx;
+                }
+            }
+        }
+
+        return ans;
+    }
+}
