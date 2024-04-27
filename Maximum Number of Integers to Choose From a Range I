@@ -1,0 +1,25 @@
+class Solution {
+    public int maxCount(int[] banned, int n, int maxSum) {
+        Set<Integer> banSet = new HashSet<>();
+        for (int num : banned) {
+            banSet.add(num);
+        }
+
+        // Initialize count and sum to 0
+        int count = 0;
+        int sum = 0;
+
+        // Iterate over the range [1, n]
+        for (int i = 1; i <= n; i++) {
+
+            // Check if the current integer is not banned and adding it to sum does not exceed maxSum
+            if (!banSet.contains(i) && (sum + i <= maxSum)) {
+            // Increment count and add the current integer to sum
+                count++;
+                sum += i;
+            }
+        }
+    // Return the maximum count of chosen integers
+    return count;
+    }
+}
